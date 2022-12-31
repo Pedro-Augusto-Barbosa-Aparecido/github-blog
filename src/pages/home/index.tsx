@@ -135,6 +135,7 @@ export function Home() {
         {issues.map((issue) => {
           return (
             <PostCard
+              issueNumber={issue.number}
               key={issue.id}
               title={issue.title}
               description={issue.body}

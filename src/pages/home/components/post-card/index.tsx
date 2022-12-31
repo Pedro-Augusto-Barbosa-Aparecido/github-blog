@@ -12,11 +12,17 @@ interface PostCardProps {
   title: string;
   description: string;
   createdAt: Date;
+  issueNumber: number;
 }
 
-export function PostCard({ description, title, createdAt }: PostCardProps) {
+export function PostCard({
+  description,
+  title,
+  createdAt,
+  issueNumber,
+}: PostCardProps) {
   return (
-    <PostCardContainer to={"/"}>
+    <PostCardContainer to={`/issue/${issueNumber}`}>
       <div>
         <PostCardTitle>{title}</PostCardTitle>
         <PostCardCreatedAt>
