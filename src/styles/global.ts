@@ -6,11 +6,16 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
     box-sizing: border-box;
   }
-  
+
   body, html {
     font-family: "Nunito", sans-serif;
     font-size: 16px;
-    
+
     background-color: ${(props) => props.theme["gray-900"]};
+  }
+
+  input, span, p, button, a {
+    padding: 0;
+    margin: 0;
   }
 `;
