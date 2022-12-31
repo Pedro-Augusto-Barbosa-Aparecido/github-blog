@@ -69,6 +69,10 @@ export const GitHubLink = styled.a`
   text-decoration: none;
 
   gap: 0.5rem;
+
+  &:hover {
+    border-bottom: 1px solid ${(props) => props.theme["blue-500"]};
+  }
 `;
 
 export const AccountInfo = styled.div`
@@ -103,4 +107,57 @@ export const AccountInfo = styled.div`
       color: ${(props) => props.theme["blue-200"]};
     }
   }
+`;
+
+export const SearchContainer = styled.div`
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  margin-top: 4.5rem;
+  margin-bottom: 3rem;
+
+  min-width: 54rem;
+
+  gap: 0.75rem;
+
+  & > div {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+
+    font-family: "Nunito", sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.125rem;
+    line-height: 160%;
+
+    color: ${(props) => props.theme["blue-200"]};
+
+    & > span:last-child {
+      font-family: "Nunito", sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 0.875rem;
+      line-height: 160%;
+
+      color: ${(props) => props.theme["gray-400"]};
+    }
+  }
+`;
+
+export const PostGrid = styled.div`
+  min-width: 54rem;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  grid-row-gap: 2rem;
+  grid-column-gap: 2rem;
 `;

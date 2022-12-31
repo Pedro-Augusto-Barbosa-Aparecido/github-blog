@@ -5,7 +5,12 @@ import {
   Bio,
   GitHubLink,
   AccountInfo,
+  SearchContainer,
+  PostGrid,
 } from "./styles";
+
+import { Input } from "./components/input/styles";
+
 import { NavBlock } from "../../components/nav-block";
 import { useEffect, useState } from "react";
 
@@ -19,6 +24,8 @@ import {
 import { FaGithub } from "react-icons/fa";
 
 import { api } from "../../lib/api/axios";
+import { IssueType } from "../../@types/issue";
+import { PostCard } from "./components/post-card";
 
 export type UserInfoType = {
   login: string;
@@ -57,6 +64,9 @@ export type UserInfoType = {
 
 export function Home() {
   const [userInfo, setUserInfo] = useState<UserInfoType>();
+  const [textSearch, setTextSearch] = useState<string>("");
+  const [issues, setIssues] = useState<IssueType[]>([]);
+  const [issueQuantity, setIssueQuantity] = useState<number>(0);
 
   async function fetchUserInformation() {
     const userInformation = await api.get(
@@ -69,6 +79,17 @@ export function Home() {
   useEffect(() => {
     fetchUserInformation();
   }, []);
+
+  useEffect(() => {
+    api
+      .get(
+        `/search/issues?q=${textSearch} repo:Pedro-Augusto-Barbosa-Aparecido/github-blog`
+      )
+      .then((issueResponse) => {
+        setIssues(issueResponse.data.items);
+        setIssueQuantity(issueResponse.data.total_count);
+      });
+  }, [textSearch]);
 
   console.log(userInfo);
 
@@ -99,6 +120,29 @@ export function Home() {
           </GitHubLink>
         </UserInfoContainer>
       </NavBlock>
+      <SearchContainer>
+        <div>
+          <span>Publicações</span>
+          <span>{issueQuantity} publicações</span>
+        </div>
+        <Input
+          placeholder={"Buscar conteúdo"}
+          value={textSearch}
+          onChange={(ev) => setTextSearch(ev.target.value)}
+        />
+      </SearchContainer>
+      <PostGrid>
+        {issues.map((issue) => {
+          return (
+            <PostCard
+              key={issue.id}
+              title={issue.title}
+              description={issue.body}
+              createdAt={new Date(issue.created_at)}
+            />
+          );
+        })}
+      </PostGrid>
     </Container>
   );
 }
