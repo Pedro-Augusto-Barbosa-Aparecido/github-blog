@@ -10,6 +10,8 @@ export const Container = styled.div`
 
   min-width: 54rem;
   margin-top: -5.5rem;
+
+  padding-bottom: 14.625rem;
 `;
 
 export const UserInfoContainer = styled.div`

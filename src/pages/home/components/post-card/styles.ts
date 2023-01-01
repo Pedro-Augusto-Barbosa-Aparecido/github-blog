@@ -18,11 +18,17 @@ export const PostCardContainer = styled(NavLink)`
   padding: 2rem;
   gap: 1.25rem;
 
+  max-width: 26rem;
+  max-height: 16.25rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
   & > div {
     display: flex;
 
     justify-content: space-between;
     align-items: flex-start;
+    width: 100%;
 
     gap: 1rem;
 
@@ -60,6 +66,15 @@ export const PostCardDescription = styled(ReactMarkdown)`
   font-weight: 400;
   font-size: 1rem;
   line-height: 160%;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  max-height: 7rem;
 
   color: ${(props) => props.theme["blue-300"]};
 

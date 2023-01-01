@@ -12,8 +12,6 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 16px;
 
     background-color: ${(props) => props.theme["gray-900"]};
-
-    padding-bottom: 14.625rem;
   }
 
   input, span, p, button, a {
