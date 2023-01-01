@@ -26,6 +26,8 @@ import { FaGithub } from "react-icons/fa";
 import { api } from "../../lib/api/axios";
 import { IssueType } from "../../@types/issue";
 import { PostCard } from "./components/post-card";
+import { useQuery } from "@tanstack/react-query";
+import { Spinner } from "../../components/spinner";
 
 export type UserInfoType = {
   login: string;
@@ -65,7 +67,6 @@ export type UserInfoType = {
 export function Home() {
   const [userInfo, setUserInfo] = useState<UserInfoType>();
   const [textSearch, setTextSearch] = useState<string>("");
-  const [issues, setIssues] = useState<IssueType[]>([]);
   const [issueQuantity, setIssueQuantity] = useState<number>(0);
 
   async function fetchUserInformation() {
@@ -76,22 +77,21 @@ export function Home() {
     setUserInfo(userInformation.data);
   }
 
+  const { data: issues, isFetching: isLoadingIssues } = useQuery<IssueType[]>(
+    ["issues", textSearch],
+    async () => {
+      const issueResponse = await api.get(
+        `/search/issues?q=${textSearch} repo:Pedro-Augusto-Barbosa-Aparecido/github-blog`
+      );
+      setIssueQuantity(issueResponse.data.total_count);
+
+      return issueResponse.data.items;
+    }
+  );
+
   useEffect(() => {
     fetchUserInformation();
   }, []);
-
-  useEffect(() => {
-    api
-      .get(
-        `/search/issues?q=${textSearch} repo:Pedro-Augusto-Barbosa-Aparecido/github-blog`
-      )
-      .then((issueResponse) => {
-        setIssues(issueResponse.data.items);
-        setIssueQuantity(issueResponse.data.total_count);
-      });
-  }, [textSearch]);
-
-  console.log(userInfo);
 
   return (
     <Container>
@@ -131,8 +131,9 @@ export function Home() {
           onChange={(ev) => setTextSearch(ev.target.value)}
         />
       </SearchContainer>
+      {isLoadingIssues && <Spinner />}
       <PostGrid>
-        {issues.map((issue) => {
+        {issues?.map((issue) => {
           return (
             <PostCard
               issueNumber={issue.number}

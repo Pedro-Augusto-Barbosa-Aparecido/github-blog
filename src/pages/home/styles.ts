@@ -120,7 +120,7 @@ export const SearchContainer = styled.div`
   align-items: flex-start;
 
   margin-top: 4.5rem;
-  margin-bottom: 3rem;
+  margin-bottom: 1.5rem;
 
   min-width: 54rem;
 
@@ -156,6 +156,8 @@ export const SearchContainer = styled.div`
 
 export const PostGrid = styled.div`
   min-width: 54rem;
+
+  margin-top: 1.5rem;
 
   display: grid;
   grid-template-columns: repeat(2, 1fr);
